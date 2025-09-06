@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Russo One', sans-serif;
+    text-align: center;
+    text-shadow: 
+        0 0 16px rgba(255, 255, 255, 0.15), 
+        0 0 16px rgba(255, 255, 255, 0.1), 
+        0 0 16px rgba(255, 255, 255, 0.05);
+}
+
+a {
+    color: #1E90FF;
+    text-decoration: none;
+    text-shadow: 
+        0 0 4px rgba(255, 255, 255, 0.1), 
+        0 0 8px rgba(255, 255, 255, 0.05);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.social-icons svg {
+    filter: drop-shadow(0 0 16px rgba(255,255,255,0.15))
+            drop-shadow(0 0 16px rgba(255,255,255,0.1))
+            drop-shadow(0 0 16px rgba(255,255,255,0.05));
+    transition: transform 0.3s;
+}
+
+.social-icons svg:hover {
+    transform: scale(1.2);
+}
+
+/* Botão de áudio */
+#audioButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#audioButton svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
+}
+
+/* Animação de pulso */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+}
+
+#audioButton.pulsing {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Contador de views */
+#viewCounter {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: white;
+    text-shadow: 
+        0 0 6px rgba(255,255,255,0.5),
+        0 0 12px rgba(30,144,255,0.4);
+    font-family: 'Russo One', sans-serif;
+}
+
+@media (max-width: 600px) {
+    #viewCounter {
+        bottom: 70px; /* sobe em telas pequenas */
+    }
+}
