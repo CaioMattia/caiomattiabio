@@ -9,7 +9,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    font-family: 'Russo One', sans-serif;
+    font-family: 'DM Sans', 'VT323', sans-serif;
     text-align: center;
     text-shadow: 1px 1px 3px #cf7285;
 }
@@ -85,6 +85,7 @@ img {
 #audioButton.pulsing {
     animation: pulse 1.5s infinite ease-in-out;
 }
+
 
 
 
