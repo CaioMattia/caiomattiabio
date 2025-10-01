@@ -2,7 +2,7 @@
 
 body {
     background-color: #000;
-    color: #2596be;
+    color: #cf7285;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -88,5 +88,6 @@ img {
 #audioButton.pulsing {
     animation: pulse 1.5s infinite ease-in-out;
 }
+
 
 
