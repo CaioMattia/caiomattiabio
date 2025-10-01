@@ -11,6 +11,8 @@ body {
     margin: 0;
     font-family: 'Russo One', sans-serif;
     text-align: center;
+    text-shadow: 
+        2px 2px 5px #2596be;
 
 a {
     color: #1E90FF;
@@ -83,6 +85,7 @@ img {
 #audioButton.pulsing {
     animation: pulse 1.5s infinite ease-in-out;
 }
+
 
 
 
