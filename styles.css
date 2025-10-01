@@ -11,15 +11,12 @@ body {
     margin: 0;
     font-family: 'DM Sans', 'VT323', sans-serif;
     text-align: center;
-    text-shadow: 1px 1px 3px #cf7285;
 }
 
 a {
     color: #1E90FF;
     text-decoration: none;
     text-shadow: 
-        0 0 4px rgba(255, 255, 255, 0.1), 
-        0 0 8px rgba(255, 255, 255, 0.05);
 }
 
 a:hover {
@@ -85,6 +82,7 @@ img {
 #audioButton.pulsing {
     animation: pulse 1.5s infinite ease-in-out;
 }
+
 
 
 
