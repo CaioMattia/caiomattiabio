@@ -89,25 +89,3 @@ img {
     animation: pulse 1.5s infinite ease-in-out;
 }
 
-/* Contador de views */
-#viewCounter {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    padding: 8px 12px;
-    border-radius: 12px;
-    font-size: 14px;
-    color: white;
-    text-shadow: 
-        0 0 6px rgba(255,255,255,0.5),
-        0 0 12px rgba(30,144,255,0.4);
-    font-family: 'Russo One', sans-serif;
-}
-
-@media (max-width: 600px) {
-    #viewCounter {
-        bottom: 70px; /* sobe em telas pequenas */
-    }
-}
