@@ -31,9 +31,6 @@ img {
 }
 
 .social-icons svg {
-    filter: drop-shadow(0 0 16px rgba(255,255,255,0.15))
-            drop-shadow(0 0 16px rgba(255,255,255,0.1))
-            drop-shadow(0 0 16px rgba(255,255,255,0.05));
     transition: transform 0.3s;
 }
 
@@ -58,7 +55,7 @@ img {
 }
 
 #audioButton svg {
-    fill: white;
+    fill: #cf7285;
     width: 24px;
     height: 24px;
 }
@@ -82,6 +79,7 @@ img {
 #audioButton.pulsing {
     animation: pulse 1.5s infinite ease-in-out;
 }
+
 
 
 
