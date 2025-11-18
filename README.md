@@ -1,3 +1,3 @@
 # Site pessoal estilo Guns.lol
 
-Feito em 15 mins
+Feito na mão + ajuda de IA para aprendizado.
