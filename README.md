@@ -1,3 +1,5 @@
-# Site pessoal estilo Guns.lol
+# Website Pessoal/Portfolio
 
-Feito na mão + ajuda de IA para aprendizado.
+Site feito na mão + auxilio de IA (Antigravity)
+
+Aprendi bastante fazendo esse projeto, meu CSS estava bem enferrujado.
