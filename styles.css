@@ -154,7 +154,7 @@ img {
 
 .nav__menu {
     position: fixed;
-    bottom: 2rem;
+    bottom: 0.75rem;
     background-color: rgba(255, 255, 255, 0.1);
     width: 90%;
     border-radius: 4rem;
@@ -200,7 +200,7 @@ img {
 /* ==================== HERO ==================== */
 .home__container {
     row-gap: 1.5rem;
-    padding-top: 0.2rem;
+    padding-top: 0rem; 
 }
 
 .home__content {
@@ -608,3 +608,4 @@ img {
         padding: 4rem 0 2rem;
     }
 }
+
