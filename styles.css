@@ -154,7 +154,7 @@ img {
 
 .nav__menu {
     position: fixed;
-    bottom: 0.50rem;
+    bottom: 0.30rem;
     background-color: rgba(255, 255, 255, 0.1);
     width: 90%;
     border-radius: 4rem;
@@ -608,6 +608,7 @@ img {
         padding: 4rem 0 2rem;
     }
 }
+
 
 
 
