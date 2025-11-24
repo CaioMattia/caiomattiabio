@@ -158,48 +158,6 @@ body::after {
     opacity: 0.7;
 }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
-
-}
-
-.social-link {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}
-
-.social-link:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent-pink);
-    box-shadow: 0 8px 24px var(--glow-pink);
-    background: rgba(255, 107, 157, 0.1);
-}
-
-.social-link svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--text-primary);
-    transition: all 0.3s ease;
-}
-
-.social-link:hover svg {
-    fill: var(--accent-pink);
-    transform: scale(1.1);
-}
-
 .link-cards {
     display: flex;
     flex-direction: column;
@@ -377,4 +335,5 @@ body::after {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+
 }
