@@ -1,189 +1,127 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caio | Analista de Sistemas & Game Developer</title>
-    <meta name="description"
-        content="Portfólio de Caio — Analista de Sistemas, criador de jogos e profissional focado em lógica, performance e experiências imersivas.">
+    <title>mattiazzi - Link in Bio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
-    <header class="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo">Caio<span class="accent">.</span></a>
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="#home" class="nav__link active-link">Início</a></li>
-                    <li class="nav__item"><a href="#about" class="nav__link">Sobre</a></li>
-                    <li class="nav__item"><a href="#portfolio" class="nav__link">Portfólio</a></li>
-                    <li class="nav__item"><a href="#contact" class="nav__link">Contato</a></li>
-                </ul>
-                <div class="nav__close" id="nav-close">
-                    ✖
-                </div>
+    <div class="container">
+        <div class="profile-section">
+            <div class="profile-image-wrapper">
+                <img src="https://i.ibb.co/4ZkKNYbk/ezgif-4c54730fd43ba0.gif" alt="mattiazzi profile"
+                    class="profile-image">
             </div>
-            <div class="nav__toggle" id="nav-toggle">☰</div>
-        </nav>
-    </header>
-
-    <main class="main">
-        <!-- SEÇÃO HERO -->
-        <section class="home section" id="home">
-            <div class="home__container container grid">
-                <div class="home__content">
-                    <span class="home__subtitle">Olá, eu sou</span>
-                    <h1 class="home__title">Caio</h1>
-                    <img src="https://scontent.ffor38-1.fna.fbcdn.net/v/t39.30808-1/503694906_1070409955219559_4664904366511012363_n.jpg?stp=c34.44.370.370a_dst-jpg_s200x200_tt6&_nc_cat=109&ccb=1-7&_nc_sid=e99d92&_nc_ohc=dBhFf8pdtqUQ7kNvwGMWoD1&_nc_oc=AdkfeMTtZA_tDBFBrGuyuuzFCvUHwwYKVrElrQE32ctRqC2uP58RIBlT25lpL_xGyf4&_nc_zt=24&_nc_ht=scontent.ffor38-1.fna&_nc_gid=pW1oC86sYIOGXi2MeEbLfw&oh=00_AfheAvQ6L_GVhw57SXRRFZsxzyw48X1TAK9b9FU26sb7Lw&oe=6928E1D0" class="img_pfp">
-                    <h3 class="home__education">Analista de Sistemas & Criador de Jogos</h3>
-                    <p class="home__description">
-                        Trabalho criando sistemas eficientes, experiências imersivas e jogos com forte foco em lógica.
-                    </p>
-                    <div class="home__buttons">
-                        <a href="#contact" class="button button--flex">Fale comigo →</a>
-                        <a href="#portfolio" class="button button--ghost">Projetos</a>
-                    </div>
-                </div>
-                <div class="home__scroll">
-                    <a href="#about" class="home__scroll-button">↓ Role para ver mais</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO SOBRE -->
-        <section class="about section" id="about">
-            <h2 class="section__title">Sobre mim</h2>
-            <span class="section__subtitle">Introdução</span>
-
-            <div class="about__container container grid">
-                <div class="about__data">
-                    <p class="about__description">
-                        Sou Analista de Sistemas e desenvolvedor de jogos, focado em lógica, narrativa e criação de
-                        experiências tipo top-down e psicológicas.
-                        Tenho 5 anos de experiência como editor de vídeo e tradutor, e também desenvolvo jogos
-                        inspirados em narrativas como <i>Yandere Simulator</i>, <i>Miside</i> e títulos indies focados
-                        em atmosfera. Fluentemente em inglês.
-                    </p>
-
-                    <div class="about__info">
-                        <div class="about__box">
-                            <h3 class="about__icon">💻</h3>
-                            <h3 class="about__title">Sistemas</h3>
-                            <span class="about__subtitle">Lógica & Estruturas</span>
-                        </div>
-                        <div class="about__box">
-                            <h3 class="about__icon">🎮</h3>
-                            <h3 class="about__title">Game Dev</h3>
-                            <span class="about__subtitle">DOM, Unity & Roblox</span>
-                        </div>
-                        <div class="about__box">
-                            <h3 class="about__icon">🗣️</h3>
-                            <h3 class="about__title">Inglês</h3>
-                            <span class="about__subtitle">Avançado</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO PORTFOLIO -->
-        <section class="portfolio section" id="portfolio">
-            <h2 class="section__title">Portfólio</h2>
-            <span class="section__subtitle">Trabalhos recentes</span>
-
-            <div class="portfolio__container container grid">
-                <!-- Project 1: Roblox Yandere -->
-                <article class="portfolio__card">
-                    <div class="portfolio__img-wrapper">
-                        <div class="portfolio__img-placeholder"
-                            style="background: linear-gradient(45deg, #2a2a2a, #333);"></div>
-                    </div>
-                    <div class="portfolio__content">
-                        <h3 class="portfolio__title">Fangame Yandere (Unity 6)</h3>
-                        <p class="portfolio__description">Sistema de horário, diálogos e IA inspirado em Yandere
-                            Simulator, criado no Unity 6.</p>
-                        <a href="#" class="portfolio__button">Ver</a>
-                    </div>
-                </article>
-
-                <!-- Project 2: Horror 10 min -->
-                <article class="portfolio__card">
-                    <div class="portfolio__img-wrapper">
-                        <div class="portfolio__img-placeholder"
-                            style="background: linear-gradient(45deg, #1a1a1a, #222);"></div>
-                    </div>
-                    <div class="portfolio__content">
-                        <h3 class="portfolio__title">Jogo de Horror (10 Minutos)</h3>
-                        <p class="portfolio__description">Um micro-jogo psicológico inspirado em Miside, focado em
-                            tensão e narrativa curta.</p>
-                        <a href="#" class="portfolio__button">Jogar</a>
-                    </div>
-                </article>
-
-                <!-- Project 3: Sistemas -->
-                <article class="portfolio__card">
-                    <div class="portfolio__img-wrapper">
-                        <div class="portfolio__img-placeholder" style="background: linear-gradient(45deg, #333, #444);">
-                        </div>
-                    </div>
-                    <div class="portfolio__content">
-                        <h3 class="portfolio__title">Ferramentas & Sistemas</h3>
-                        <p class="portfolio__description">Criação de sistemas lógicos, mecânicas top-down em GML.</p>
-                        <a href="#" class="portfolio__button">Detalhes</a>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- SEÇÃO CONTATO -->
-        <section class="contact section" id="contact">
-            <h2 class="section__title">Fale comigo</h2>
-            <span class="section__subtitle">Me dê um toque</span>
-
-            <div class="contact__container container grid">
-                <div class="contact__content">
-                    <h3 class="contact__title">Contato direto</h3>
-                    <div class="contact__info">
-                        <div class="contact__card">
-                            <h3 class="contact__card-title">Telegram</h3>
-                            <span class="contact__card-data">@WiredDev</span>
-                            <a href="mailto:mattiacaioweb@gmail.com" class="contact__button">Enviar →</a>
-                        </div>
-                        <div class="contact__card">
-                            <h3 class="contact__card-title">LinkedIn</h3>
-                            <span class="contact__card-data">Caio Mattia</span>
-                            <a href="#" class="contact__button">Conectar →</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer__container container">
-            <h1 class="footer__title">Caio</h1>
-            <ul class="footer__list">
-                <li><a href="#about" class="footer__link">Sobre</a></li>
-                <li><a href="#portfolio" class="footer__link">Projetos</a></li>
-                <li><a href="#contact" class="footer__link">Contato</a></li>
-            </ul>
-            <span class="footer__copy">© 2025 Caio. Todos os direitos reservados.</span>
+            <h1 class="username">mattiazzi</h1>
+            <p class="bio">Creator & Developer</p>
+            <p class="location">Brazil</p>
         </div>
-    </footer>
+
+        <div class="social-links">
+            <a href="https://github.com/CaioMattia" target="_blank" rel="noopener noreferrer" class="social-link"
+                aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                </svg>
+            </a>
+            <a href="https://www.youtube.com/@yiik" target="_blank" rel="noopener noreferrer" class="social-link"
+                aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/mattiacaio" target="_blank" rel="noopener noreferrer" class="social-link"
+                aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+            </a>
+        </div>
+
+        <div class="link-cards">
+            <a href="https://github.com/CaioMattia" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                </div>
+                <div class="link-card-content">
+                    <div class="link-card-title">GitHub Projects</div>
+                    <div class="link-card-description">Dê uma olhada nos meus projetos Open-Source</div>
+                </div>
+                <svg class="link-card-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+
+            <a href="https://www.youtube.com/@yiik" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                    </svg>
+                </div>
+                <div class="link-card-content">
+                    <div class="link-card-title">YouTube Channel</div>
+                    <div class="link-card-description">Veja meus vídeos mais recentes</div>
+                </div>
+                <svg class="link-card-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+
+            <a href="https://www.instagram.com/mattiacaio" target="_blank" rel="noopener noreferrer" class="link-card">
+                <div class="link-card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                    </svg>
+                </div>
+                <div class="link-card-content">
+                    <div class="link-card-title">Instagram</div>
+                    <div class="link-card-description">Siga para ver meus posts</div>
+                </div>
+                <svg class="link-card-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="audio-button" id="audioButton" aria-label="Toggle audio">
+        <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+        </svg>
+    </div>
+
+    <audio id="audio" src="https://audio.jukehost.co.uk/DBIhTGyOCeaed3r5ReYWdLz793SGD4j8" loop></audio>
 
     <script src="script.js"></script>
 </body>
 
-
 </html>
-
-
