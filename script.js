@@ -1,62 +1,26 @@
-/* ==================== CURSOR PERSONALIZADO ==================== */
-const cursorDot = document.querySelector('#cursor-dot');
-const cursorOutline = document.querySelector('#cursor-outline');
+const audio = document.getElementById('audio');
+const button = document.getElementById('audioButton');
+const icon = document.getElementById('audioIcon');
 
-// Movimento do cursor
-window.addEventListener('mousemove', (e) => {
-    const posX = e.clientX;
-    const posY = e.clientY;
+let isPlaying = false;
 
-    // Ponto segue instantaneamente
-    cursorDot.style.left = `${posX}px`;
-    cursorDot.style.top = `${posY}px`;
-
-    // Contorno segue com animação suave
-    cursorOutline.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-    }, { duration: 500, fill: "forwards" });
+audio.play().then(() => {
+    isPlaying = true;
+    button.classList.add('playing');
+}).catch(() => {
+    console.log('Autoplay blocked');
 });
 
-/* ==================== MENU ATIVO NO SCROLL ==================== */
-const sections = document.querySelectorAll('section[id]');
-
-function scrollActive() {
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(current => {
-        const sectionHeight = current.offsetHeight;
-        const sectionTop = current.offsetTop - 58;
-        const sectionId = current.getAttribute('id');
-        const sectionsClass = document.querySelector('.nav__menu a[href*=' + sectionId + ']');
-
-        if (sectionsClass) {
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                sectionsClass.classList.add('active-link');
-            } else {
-                sectionsClass.classList.remove('active-link');
-            }
-        }
-    });
-}
-window.addEventListener('scroll', scrollActive);
-
-/* ==================== ANIMAÇÃO DE REVELAÇÃO ==================== */
-const revealElements = document.querySelectorAll('.home__content, .about__data, .portfolio__card, .contact__content, .section__title');
-
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            // Opcional: Parar de observar após revelar
-            // revealObserver.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.1
-});
-
-revealElements.forEach(el => {
-    el.classList.add('reveal');
-    revealObserver.observe(el);
+button.addEventListener('click', () => {
+    if (isPlaying) {
+        audio.pause();
+        button.classList.remove('playing');
+        icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
+        isPlaying = false;
+    } else {
+        audio.play();
+        button.classList.add('playing');
+        icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>';
+        isPlaying = true;
+    }
 });
