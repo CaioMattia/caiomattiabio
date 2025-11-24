@@ -264,18 +264,6 @@ body::after {
     .link-card {
         padding: 1rem 1.25rem;
     }
-
-    .audio-button {
-        top: 1rem;
-        right: 1rem;
-        width: 48px;
-        height: 48px;
-    }
-
-    .audio-button svg {
-        width: 20px;
-        height: 20px;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -286,4 +274,5 @@ body::after {
     }
 
 }
+
 
