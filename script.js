@@ -463,17 +463,57 @@ function initializeDiscordTooltip() {
 
   // Copy to clipboard on click
   function copyDiscord() {
-    navigator.clipboard.writeText(discordUsername).then(() => {
-      const originalText = tooltip.querySelector('.discord-username').textContent;
-      tooltip.querySelector('.discord-username').textContent = 'Copiado!';
-      setTimeout(() => {
-        if (tooltip) {
-          tooltip.querySelector('.discord-username').textContent = originalText;
-        }
-      }, 1500);
-    }).catch(() => {
-      console.log('Não foi possível copiar');
-    });
+    if (!tooltip) return;
+
+    const originalText = tooltip.querySelector('.discord-username').textContent;
+
+    // Try modern Clipboard API first
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(discordUsername).then(() => {
+        tooltip.querySelector('.discord-username').textContent = 'Copiado! ✓';
+        setTimeout(() => {
+          if (tooltip) {
+            tooltip.querySelector('.discord-username').textContent = originalText;
+          }
+        }, 1500);
+      }).catch(() => {
+        // Fallback for older browsers
+        fallbackCopy();
+      });
+    } else {
+      fallbackCopy();
+    }
+  }
+
+  // Fallback copy method for older mobile browsers
+  function fallbackCopy() {
+    const textArea = document.createElement('textarea');
+    textArea.value = discordUsername;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      if (tooltip) {
+        tooltip.querySelector('.discord-username').textContent = 'Copiado! ✓';
+        setTimeout(() => {
+          if (tooltip) {
+            tooltip.querySelector('.discord-username').textContent = discordUsername;
+          }
+        }, 1500);
+      }
+    } catch (err) {
+      console.log('Erro ao copiar:', err);
+      if (tooltip) {
+        tooltip.querySelector('.discord-username').textContent = discordUsername;
+      }
+    }
+
+    document.body.removeChild(textArea);
   }
 
   // Event listeners
@@ -484,15 +524,38 @@ function initializeDiscordTooltip() {
     copyDiscord();
   });
 
-  // Touch support for mobile
+  // Enhanced touch support for mobile
+  let touchTimeout;
   discordBadge.addEventListener('touchstart', (e) => {
     e.preventDefault();
+    e.stopPropagation();
+
+    // Show tooltip immediately
     showTooltip(e);
-    setTimeout(hideTooltip, 2000);
+
+    // Clear any existing timeout
+    if (touchTimeout) clearTimeout(touchTimeout);
+
+    // Set timeout to hide tooltip and copy
+    touchTimeout = setTimeout(() => {
+      copyDiscord();
+      setTimeout(hideTooltip, 1500);
+    }, 100);
+  });
+
+  // Prevent default touch behavior
+  discordBadge.addEventListener('touchend', (e) => {
+    e.preventDefault();
+  });
+
+  // Hide tooltip when touching elsewhere
+  document.addEventListener('touchstart', (e) => {
+    if (!discordBadge.contains(e.target) && tooltip) {
+      hideTooltip();
+    }
   });
 }
 
 // Console welcome message
 console.log('%c🌙 Mattia', 'font-size: 20px; font-weight: bold; color: #ffffff;');
 console.log('%cMusic player enabled - Click play to start', 'font-size: 12px; color: #a3a3a3;');
-
