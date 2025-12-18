@@ -42,6 +42,7 @@ let isPlaying = false;
 document.addEventListener('DOMContentLoaded', () => {
   initializeEnterOverlay();
   initializeProfile();
+  initializeTabs();
   initializeMusicPlayer();
   initializeAnimations();
   initializeParticles();
@@ -87,6 +88,70 @@ function initializeProfile() {
 }
 
 // ============================================
+// TAB NAVIGATION
+// ============================================
+function initializeTabs() {
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  const tabIndicator = document.querySelector('.tab-indicator');
+
+  if (!tabButtons.length || !tabPanels.length || !tabIndicator) return;
+
+  // Function to switch tabs
+  function switchTab(tabName) {
+    // Remove active class from all buttons and panels
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabPanels.forEach(panel => panel.classList.remove('active'));
+
+    // Add active class to selected button and panel
+    const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
+    const activePanel = document.querySelector(`[data-panel="${tabName}"]`);
+
+    if (activeButton && activePanel) {
+      activeButton.classList.add('active');
+      activePanel.classList.add('active');
+
+      // Move indicator
+      const buttonIndex = Array.from(tabButtons).indexOf(activeButton);
+      const buttonWidth = activeButton.offsetWidth;
+      const buttonLeft = activeButton.offsetLeft;
+
+      tabIndicator.style.transform = `translateX(${buttonLeft - 4}px)`;
+      tabIndicator.style.width = `${buttonWidth}px`;
+    }
+  }
+
+  // Add click event listeners to tab buttons
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const tabName = button.getAttribute('data-tab');
+      switchTab(tabName);
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      const activeButton = document.querySelector('.tab-button.active');
+      const currentIndex = Array.from(tabButtons).indexOf(activeButton);
+
+      let newIndex;
+      if (e.key === 'ArrowLeft') {
+        newIndex = currentIndex > 0 ? currentIndex - 1 : tabButtons.length - 1;
+      } else {
+        newIndex = currentIndex < tabButtons.length - 1 ? currentIndex + 1 : 0;
+      }
+
+      const newTab = tabButtons[newIndex].getAttribute('data-tab');
+      switchTab(newTab);
+    }
+  });
+
+  // Initialize first tab
+  switchTab('profile');
+}
+
+// ============================================
 // MUSIC PLAYER
 // ============================================
 function initializeMusicPlayer() {
@@ -129,7 +194,7 @@ function initializeMusicPlayer() {
 // RIPPLE EFFECT
 // ============================================
 function initializeRippleEffects() {
-  document.querySelectorAll('button, .social-icon').forEach(element => {
+  document.querySelectorAll('button:not(#enterBtn), .social-icon').forEach(element => {
     element.addEventListener('click', createRipple);
   });
 }
@@ -201,28 +266,6 @@ function initializeAnimations() {
   document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
   });
-
-  // Add hover tilt effect to profile card
-  const profileCard = document.querySelector('.profile-card');
-  if (profileCard) {
-    profileCard.addEventListener('mousemove', (e) => {
-      const rect = profileCard.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const rotateX = (y - centerY) / 50;
-      const rotateY = (centerX - x) / 50;
-
-      profileCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-
-    profileCard.addEventListener('mouseleave', () => {
-      profileCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-    });
-  }
 }
 
 // ============================================
