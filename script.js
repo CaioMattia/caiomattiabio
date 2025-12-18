@@ -11,7 +11,7 @@ const CONFIG = {
   profile: {
     username: 'mattia',
     bio: 'together in death',
-    avatar: 'https://avatars.githubusercontent.com/u/88405424?v=4'
+    avatar: 'https://avatars.fastly.steamstatic.com/089f048ba25d36869533d8b9fb8b0697d7976ad4_full.jpg'
   },
 
   // Background Music
