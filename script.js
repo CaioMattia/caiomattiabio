@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeParticles();
   initializeRippleEffects();
   initializeDiscordTooltip();
+  initializeCustomCursor();
 });
 
 // ============================================
@@ -94,6 +95,8 @@ function initializeTabs() {
   const tabButtons = document.querySelectorAll('.tab-button');
   const tabPanels = document.querySelectorAll('.tab-panel');
   const tabIndicator = document.querySelector('.tab-indicator');
+  const profileCard = document.querySelector('.profile-card');
+  const tabNavigation = document.querySelector('.tab-navigation');
 
   if (!tabButtons.length || !tabPanels.length || !tabIndicator) return;
 
@@ -128,6 +131,26 @@ function initializeTabs() {
       switchTab(tabName);
     });
   });
+
+  // Add hover effect for 3D card transformation on entire navigation area
+  if (tabNavigation && profileCard) {
+    tabNavigation.addEventListener('mouseenter', () => {
+      // Get the active tab to apply its specific effect
+      const activeButton = document.querySelector('.tab-button.active');
+      const tabName = activeButton ? activeButton.getAttribute('data-tab') : 'portfolio';
+
+      // Remove all hover classes
+      profileCard.classList.remove('tab-hover-profile', 'tab-hover-portfolio', 'tab-hover-about');
+
+      // Add specific hover class based on active tab
+      profileCard.classList.add(`tab-hover-${tabName}`);
+    });
+
+    tabNavigation.addEventListener('mouseleave', () => {
+      // Remove all hover classes
+      profileCard.classList.remove('tab-hover-profile', 'tab-hover-portfolio', 'tab-hover-about');
+    });
+  }
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
@@ -591,6 +614,121 @@ function initializeDiscordTooltip() {
     if (!discordBadge.contains(e.target) && tooltip) {
       hideTooltip();
     }
+  });
+}
+
+// ============================================
+// CUSTOM CURSOR WITH TRAIL
+// ============================================
+function initializeCustomCursor() {
+  // Check if device supports hover (not touch device)
+  if (window.matchMedia('(hover: none)').matches) {
+    return;
+  }
+
+  // Create cursor element
+  const cursor = document.createElement('div');
+  cursor.className = 'custom-cursor';
+  document.body.appendChild(cursor);
+
+  // Trail particles array
+  const trailParticles = [];
+  const maxTrailLength = 15;
+  let mouseX = 0;
+  let mouseY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
+  let lastTrailX = 0;
+  let lastTrailY = 0;
+  let frameCount = 0;
+
+  // Mouse move event
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Mouse down/up events for click effect
+  document.addEventListener('mousedown', () => {
+    cursor.classList.add('clicking');
+  });
+
+  document.addEventListener('mouseup', () => {
+    cursor.classList.remove('clicking');
+  });
+
+  // Create trail particle
+  function createTrailParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.className = 'cursor-trail';
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    document.body.appendChild(particle);
+
+    trailParticles.push({
+      element: particle,
+      life: 1,
+      x: x,
+      y: y
+    });
+
+    // Remove old particles
+    if (trailParticles.length > maxTrailLength) {
+      const oldParticle = trailParticles.shift();
+      oldParticle.element.remove();
+    }
+  }
+
+  // Animation loop
+  function animate() {
+    // Less smooth cursor movement (more responsive)
+    const speed = 0.35; // Increased from 0.15 for less smoothing
+    cursorX += (mouseX - cursorX) * speed;
+    cursorY += (mouseY - cursorY) * speed;
+
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+
+    // Create trail particles behind the cursor (every 2 frames)
+    frameCount++;
+    if (frameCount % 2 === 0) {
+      const distance = Math.sqrt(
+        Math.pow(cursorX - lastTrailX, 2) + Math.pow(cursorY - lastTrailY, 2)
+      );
+
+      // Only create trail if cursor moved enough
+      if (distance > 5) {
+        createTrailParticle(cursorX, cursorY);
+        lastTrailX = cursorX;
+        lastTrailY = cursorY;
+      }
+    }
+
+    // Update trail particles
+    trailParticles.forEach((particle, index) => {
+      particle.life -= 0.05;
+
+      if (particle.life <= 0) {
+        particle.element.remove();
+        trailParticles.splice(index, 1);
+      } else {
+        particle.element.style.opacity = particle.life * 0.6;
+        particle.element.style.transform = `translate(-50%, -50%) scale(${particle.life})`;
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Hide cursor when leaving window
+  document.addEventListener('mouseleave', () => {
+    cursor.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    cursor.style.opacity = '1';
   });
 }
 
