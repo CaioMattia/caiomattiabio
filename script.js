@@ -1,6 +1,4 @@
-// ============================================
 // CONFIGURATION
-// ============================================
 const CONFIG = {
   // Profile Information
   profile: {
@@ -18,9 +16,7 @@ const CONFIG = {
   }
 };
 
-// ============================================
 // DOM ELEMENTS
-// ============================================
 const elements = {
   enterOverlay: document.getElementById('enter-overlay'),
   enterBtn: document.getElementById('enterBtn'),
@@ -36,9 +32,7 @@ const elements = {
 let backgroundMusic = null;
 let isPlaying = false;
 
-// ============================================
 // INITIALIZATION
-// ============================================
 document.addEventListener('DOMContentLoaded', () => {
   initializeEnterOverlay();
   initializeProfile();
@@ -51,9 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeCustomCursor();
 });
 
-// ============================================
 // ENTER OVERLAY
-// ============================================
 function initializeEnterOverlay() {
   if (!elements.enterOverlay || !elements.enterBtn) return;
 
@@ -79,18 +71,14 @@ function initializeEnterOverlay() {
   });
 }
 
-// ============================================
 // PROFILE INITIALIZATION
-// ============================================
 function initializeProfile() {
   if (elements.username) elements.username.textContent = CONFIG.profile.username;
   if (elements.bio) elements.bio.textContent = CONFIG.profile.bio;
   if (elements.profileAvatar) elements.profileAvatar.src = CONFIG.profile.avatar;
 }
 
-// ============================================
 // TAB NAVIGATION
-// ============================================
 function initializeTabs() {
   const tabButtons = document.querySelectorAll('.tab-button');
   const tabPanels = document.querySelectorAll('.tab-panel');
@@ -174,9 +162,7 @@ function initializeTabs() {
   switchTab('profile');
 }
 
-// ============================================
 // MUSIC PLAYER
-// ============================================
 function initializeMusicPlayer() {
   if (!CONFIG.music.enabled || !elements.musicPlayer) return;
 
@@ -213,9 +199,7 @@ function initializeMusicPlayer() {
   });
 }
 
-// ============================================
 // RIPPLE EFFECT
-// ============================================
 function initializeRippleEffects() {
   document.querySelectorAll('button:not(#enterBtn), .social-icon').forEach(element => {
     element.addEventListener('click', createRipple);
@@ -270,9 +254,7 @@ function createRipple(event) {
   setTimeout(() => ripple.remove(), 600);
 }
 
-// ============================================
 // SCROLL ANIMATIONS
-// ============================================
 function initializeAnimations() {
   // Intersection Observer for fade-in animations
   const observer = new IntersectionObserver((entries) => {
@@ -437,9 +419,7 @@ function createParticle(container) {
   // This function is no longer needed but kept for compatibility
 }
 
-// ============================================
 // DISCORD TOOLTIP
-// ============================================
 function initializeDiscordTooltip() {
   const discordBadge = document.getElementById('discordBadge');
   if (!discordBadge) return;
@@ -631,9 +611,31 @@ function initializeCustomCursor() {
   cursor.className = 'custom-cursor';
   document.body.appendChild(cursor);
 
-  // Trail particles array
+  // Object Pool for trail particles
   const trailParticles = [];
   const maxTrailLength = 15;
+  let activeParticles = 0;
+  
+  // Initialize the pool with elements
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < maxTrailLength; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'cursor-trail';
+    // Hide initially
+    particle.style.opacity = '0';
+    particle.style.transform = 'translate(-50%, -50%) scale(0)';
+    fragment.appendChild(particle);
+    
+    trailParticles.push({
+      element: particle,
+      life: 0,
+      x: 0,
+      y: 0,
+      active: false
+    });
+  }
+  document.body.appendChild(fragment);
+
   let mouseX = 0;
   let mouseY = 0;
   let cursorX = 0;
@@ -657,39 +659,47 @@ function initializeCustomCursor() {
     cursor.classList.remove('clicking');
   });
 
-  // Create trail particle
-  function createTrailParticle(x, y) {
-    const particle = document.createElement('div');
-    particle.className = 'cursor-trail';
-    particle.style.left = x + 'px';
-    particle.style.top = y + 'px';
-    document.body.appendChild(particle);
-
-    trailParticles.push({
-      element: particle,
-      life: 1,
-      x: x,
-      y: y
-    });
-
-    // Remove old particles
-    if (trailParticles.length > maxTrailLength) {
-      const oldParticle = trailParticles.shift();
-      oldParticle.element.remove();
+  // Activate a particle from the pool
+  function spawnTrailParticle(x, y) {
+    // Find first inactive particle
+    let p = trailParticles.find(p => !p.active);
+    
+    // If all are active, reuse the oldest one
+    if (!p) {
+        // Find particle with lowest life (oldest)
+        p = trailParticles[0];
+        let lowestLife = p.life;
+        for(let i = 1; i < trailParticles.length; i++) {
+            if(trailParticles[i].life < lowestLife) {
+                p = trailParticles[i];
+                lowestLife = p.life;
+            }
+        }
     }
+
+    p.active = true;
+    p.life = 1;
+    p.x = x;
+    p.y = y;
+    
+    // Set initial position immediately to avoid lag 
+    p.element.style.left = x + 'px';
+    p.element.style.top = y + 'px';
+    p.element.style.opacity = '0.6';
+    p.element.style.transform = 'translate(-50%, -50%) scale(1)';
   }
 
   // Animation loop
   function animate() {
     // Less smooth cursor movement (more responsive)
-    const speed = 0.35; // Increased from 0.15 for less smoothing
+    const speed = 0.35;
     cursorX += (mouseX - cursorX) * speed;
     cursorY += (mouseY - cursorY) * speed;
 
     cursor.style.left = cursorX + 'px';
     cursor.style.top = cursorY + 'px';
 
-    // Create trail particles behind the cursor (every 2 frames)
+    // Spawn trail particles behind the cursor (every 2 frames)
     frameCount++;
     if (frameCount % 2 === 0) {
       const distance = Math.sqrt(
@@ -698,24 +708,28 @@ function initializeCustomCursor() {
 
       // Only create trail if cursor moved enough
       if (distance > 5) {
-        createTrailParticle(cursorX, cursorY);
+        spawnTrailParticle(cursorX, cursorY);
         lastTrailX = cursorX;
         lastTrailY = cursorY;
       }
     }
 
     // Update trail particles
-    trailParticles.forEach((particle, index) => {
-      particle.life -= 0.05;
+    for (let i = 0; i < maxTrailLength; i++) {
+      const particle = trailParticles[i];
+      if (particle.active) {
+        particle.life -= 0.05;
 
-      if (particle.life <= 0) {
-        particle.element.remove();
-        trailParticles.splice(index, 1);
-      } else {
-        particle.element.style.opacity = particle.life * 0.6;
-        particle.element.style.transform = `translate(-50%, -50%) scale(${particle.life})`;
+        if (particle.life <= 0) {
+          particle.active = false;
+          particle.element.style.opacity = '0';
+        } else {
+          // Hardware acceleration friendly transformation
+          particle.element.style.opacity = (particle.life * 0.6).toFixed(2);
+          particle.element.style.transform = `translate(-50%, -50%) scale(${particle.life.toFixed(2)})`;
+        }
       }
-    });
+    }
 
     requestAnimationFrame(animate);
   }
@@ -733,5 +747,5 @@ function initializeCustomCursor() {
 }
 
 // Console welcome message
-console.log('%c🌙 Mattia', 'font-size: 20px; font-weight: bold; color: #ffffff;');
+console.log('%cMattia', 'font-size: 20px; font-weight: bold; color: #ffffff;');
 console.log('%cMusic player enabled - Click play to start', 'font-size: 12px; color: #a3a3a3;');
