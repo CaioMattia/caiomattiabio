@@ -1,5 +1,3 @@
-/* GUNS.LOL BIO WEBSITE - STYLE.CSS */
-
 /* CSS CUSTOM PROPERTIES */
 :root {
     /* COLOR PALETTE */
@@ -286,14 +284,16 @@ a {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Efeitos 3D aplicados via JavaScript no hover dos tabs */
-.profile-card.tab-hover-profile,
-.profile-card.tab-hover-portfolio,
-.profile-card.tab-hover-about {
-    transform: perspective(1200px) rotateX(2deg) rotateY(-3deg) scale(1.02);
-    box-shadow:
-        var(--shadow-xl),
-        0 25px 50px -12px rgba(255, 255, 255, 0.25);
+/* Efeitos 3D aplicados via JavaScript no hover dos tabs, apenas em desktop */
+@media (hover: hover) and (pointer: fine) {
+    .profile-card.tab-hover-profile,
+    .profile-card.tab-hover-portfolio,
+    .profile-card.tab-hover-about {
+        transform: perspective(1200px) rotateX(2deg) rotateY(-3deg) scale(1.02);
+        box-shadow:
+            var(--shadow-xl),
+            0 25px 50px -12px rgba(255, 255, 255, 0.25);
+    }
 }
 
 .profile-card::before {
