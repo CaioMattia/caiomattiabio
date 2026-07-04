@@ -1,242 +1,1437 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <meta name="description" content="minha bicloset">
-    <meta name="author" content="mattia">
-    <meta name="theme-color" content="#8b5cf6">
-
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="mattia">
-    <meta property="og:description" content="together in death">
-    <meta property="og:image" content="https://avatars.fastly.steamstatic.com/089f048ba25d36869533d8b9fb8b0697d7976ad4_full.jpg">
-
-    <title>Mattia</title>
-
-    <!-- Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caio Mattia | Portfólio Pessoal</title>
+    <meta name="description" content="Portfólio pessoal — desenvolvedor, designer e criador digital. Projetos, experiência e conquistas.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              accent: '#3B82F6',
+              'accent-light': '#60A5FA',
+              'accent-dark': '#2563EB',
+              surface: '#111111',
+              bg: '#050505',
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.35);
+            --card: #111111;
+        }
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+        * { box-sizing: border-box; }
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* â”€â”€ Reveal on scroll â”€â”€ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* â”€â”€ Floating hands â”€â”€ */
+        @keyframes float-left {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        @keyframes float-right {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(20px) rotate(-2deg); }
+        }
+        .animate-float-left  { animation: float-left  12s ease-in-out infinite; }
+        .animate-float-right { animation: float-right 14s ease-in-out infinite; }
+
+        /* Blue tint on hands */
+        .hand-wrapper img {
+            filter: grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(400%) brightness(0.8) !important;
+        }
+
+        /* â”€â”€ Noise overlay â”€â”€ */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.04;
+            mix-blend-mode: overlay;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+        }
+
+        /* â”€â”€ Parallax â”€â”€ */
+        .parallax-card-up   { transform: translateY(var(--scroll-offset-up, 0px)); }
+        .parallax-card-down { transform: translateY(var(--scroll-offset-down, 0px)); }
+
+        /* â”€â”€ Section divider â”€â”€ */
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* â”€â”€ Skill bar fill animation â”€â”€ */
+        .skill-fill {
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .skill-fill.animated {
+            /* width set via inline style */
+        }
+
+        /* â”€â”€ Counter â”€â”€ */
+        .counter-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* â”€â”€ Timeline â”€â”€ */
+        .timeline-line {
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 12px var(--accent-glow);
+            position: absolute;
+            left: -30px;
+            top: 4px;
+        }
+
+        /* â”€â”€ Testimonial carousel â”€â”€ */
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+
+        /* â”€â”€ Gallery hover â”€â”€ */
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        .gallery-item img {
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-overlay {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* â”€â”€ Mobile menu â”€â”€ */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* â”€â”€ Glow button â”€â”€ */
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-accent::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--accent);
+            filter: blur(16px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            border-radius: inherit;
+        }
+        .btn-accent:hover::before {
+            opacity: 0.5;
+        }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* â”€â”€ Card hover glow â”€â”€ */
+        .card-glow {
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .card-glow:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 40px rgba(59, 130, 246, 0.1);
+        }
+
+        /* â”€â”€ Scrollbar â”€â”€ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* â”€â”€ Form inputs â”€â”€ */
+        .form-input {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: white;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+            width: 100%;
+        }
+        .form-input::placeholder { color: rgba(255,255,255,0.3); }
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* â”€â”€ Dot pattern â”€â”€ */
+        .dot-pattern {
+            background-image: radial-gradient(circle, #333 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="min-h-screen bg-bg selection:bg-accent selection:text-white">
 
-    <!-- Animated Background -->
-    <div class="background">
-        <div class="background-blur"></div>
-    </div>
+        <!-- Noise Overlay -->
+        <div class="noise-overlay"></div>
 
-    <!-- Click to Enter Overlay (Ensures the music plays) -->
-    <div id="enter-overlay" class="enter-overlay">
-        <div class="enter-content">
-            <h1 class="enter-title">mattia</h1>
-            <p class="enter-subtitle">together in death</p>
-            <button class="enter-button" id="enterBtn">
-                <span>Click to Enter</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-            </button>
+        <!-- ════════════════════════════════════════════ -->
+        <!-- NAVBAR                                       -->
+        <!-- ════════════════════════════════════════════ -->
+        <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6">
+            <div class="container mx-auto px-6 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" id="nav-logo" class="text-xl font-bold tracking-tighter font-serif hover:text-accent transition-colors duration-300">
+                    Mattia<span class="text-accent">.</span>
+                </a>
+
+                <!-- Desktop links -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#about"        class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Sobre</a>
+                    <a href="#services"     class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">O Que Faço</a>
+                    <!-- <a href="#projects"     class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Projetos</a> -->
+                    <a href="#skills"       class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Skills</a>
+                    <!-- <a href="#achievements" class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Conquistas</a> -->
+                    <a href="#testimonials" class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Depoimentos</a>
+                    <a href="#gallery" class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Momentos</a>
+                    <!-- <a href="#contact"      class="nav-link text-sm text-gray-400 hover:text-white transition-colors duration-300">Contato</a> -->
+                </div>
+
+                <!-- Desktop CTA -->
+                <!-- <!-- <a href="#contact" id="nav-cta" class="hidden lg:inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-medium btn-accent">
+                    Fale Comigo
+                </a> --> -->
+
+                <!-- Mobile hamburger -->
+                <button id="mobile-toggle" class="lg:hidden flex flex-col gap-1.5 p-2 z-[60]" aria-label="Menu">
+                    <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar1"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
+                    <span class="block w-4 h-0.5 bg-white transition-all duration-300 ml-auto" id="bar3"></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[55] bg-bg/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
+            <a href="#about"        class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Sobre</a>
+            <a href="#services"     class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">O Que Faço</a>
+            <!-- <a href="#projects"     class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Projetos</a> -->
+            <a href="#skills"       class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Skills</a>
+            <!-- <a href="#achievements" class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Conquistas</a> -->
+            <a href="#testimonials" class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Depoimentos</a>
+            <a href="#gallery"      class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Momentos</a>
+            <!-- <a href="#contact"      class="mobile-link text-2xl text-gray-300 hover:text-accent transition-colors font-serif">Contato</a> -->
+            <!-- <a href="#contact" class="mt-4 px-8 py-3 rounded-full text-base font-medium btn-accent">Fale Comigo</a> -->
         </div>
-    </div>
 
-    <!-- Main Container -->
-    <div class="container">
+        <!-- ════════════════════════════════════════════ -->
+        <!-- HERO                                         -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-20">
+            <!-- Background atmosphere -->
+            <div class="absolute inset-0 z-0 pointer-events-none select-none">
+                <div class="absolute top-0 left-0 w-full h-full opacity-40 mix-blend-screen">
+                    <img src="https://framerusercontent.com/images/9zvwRJAavKKacVyhFCwHyXW1U.png?width=1536&height=1024" alt="" class="w-full h-full object-cover object-center opacity-70" style="filter: saturate(0) brightness(0.6);">
+                </div>
+                <!-- Blue atmospheric glow -->
+                <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20" style="background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg z-10"></div>
+            </div>
 
-        <!-- Profile Card -->
-        <div class="profile-card">
+            <!-- Floating hands (KEPT — blue tinted) -->
+            <div class="absolute -left-[10%] top-[5%] md:left-[-5%] md:top-[-15%] w-[50vw] md:w-[40vw] max-w-[800px] z-10 pointer-events-none opacity-70 animate-float-left hand-wrapper">
+                <img src="https://framerusercontent.com/images/KNhiA5A2ykNYqNkj04Hk6BVg5A.png?width=1540&height=1320" alt="Hand Reaching" class="w-full h-auto object-contain" style="filter: grayscale(1) brightness(0.8);">
+            </div>
+            <div class="absolute -right-[10%] bottom-[5%] md:right-[-5%] md:bottom-[-5%] w-[45vw] md:w-[35vw] max-w-[700px] z-10 pointer-events-none opacity-70 animate-float-right hand-wrapper">
+                <img src="https://framerusercontent.com/images/X89VFCABCEjjZ4oLGa3PjbOmsA.png?width=1542&height=1002" alt="Hand Receiving" class="w-full h-auto object-contain" style="filter: grayscale(1) brightness(0.8);">
+            </div>
 
-            <!-- Profile Header -->
-            <section class="profile-header">
-                <!-- Avatar with Status -->
-                <div class="avatar-container">
-                    <img src="https://avatars.fastly.steamstatic.com/089f048ba25d36869533d8b9fb8b0697d7976ad4_full.jpg"
-                        alt="Profile Avatar" class="avatar" id="profileAvatar" width="80" height="80">
-                    <div class="status-indicator">
-                        <div class="status-icon"></div>
+            <!-- Hero content -->
+            <div class="container mx-auto px-6 relative z-20 text-center">
+                <div id="hero-content-wrapper" class="max-w-4xl mx-auto">
+                    <div class="reveal">
+                        <p class="text-sm md:text-base text-accent uppercase tracking-[0.3em] mb-6 font-medium">Desenvolvedor & Designer</p>
+                    </div>
+                    <div class="reveal" style="transition-delay: 150ms;">
+                        <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium leading-[1.05] tracking-tight mb-8 font-serif">
+                            Olá, eu sou<br>
+                            <span class="text-accent italic">Caio Mattia.</span>
+                        </h1>
+                    </div>
+                    <div class="reveal" style="transition-delay: 300ms;">
+                        <p class="text-base md:text-lg text-gray-400 max-w-xl mx-auto mb-12 font-light leading-relaxed">
+                            Transformo ideias em experiências digitais memoráveis. Design, código e estratégia para projetos que fazem a diferença.
+                        </p>
+                    </div>
+                    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4" style="transition-delay: 450ms;">
+                        <!-- <a href="#projects" class="px-8 py-3.5 rounded-full text-sm font-medium btn-accent">Ver Projetos</a> -->
+                        <!-- <a href="#contact" class="px-8 py-3.5 rounded-full text-sm font-medium btn-outline">
+                            Fale Comigo
+                        </a> -->
+                    </div>
+                    <div class="reveal flex items-center justify-center gap-4 text-[10px] md:text-xs text-white/30 uppercase tracking-[0.2em] mt-16 font-mono" style="transition-delay: 600ms;">
+                        <span id="current-time">00:00</span>
+                        <span class="w-px h-3 bg-white/15"></span>
+                        <span>Brasil</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 reveal" style="transition-delay: 800ms;">
+                <div class="w-5 h-8 rounded-full border border-white/20 flex justify-center pt-1.5">
+                    <div class="w-1 h-2 rounded-full bg-accent animate-bounce"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- ABOUT                                        -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="about" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+                    <!-- Left: Photo area -->
+                    <div class="reveal order-2 lg:order-1 flex justify-center lg:justify-end pr-0 lg:pr-8">
+                        <div class="relative w-full max-w-sm">
+                            <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-surface border border-white/5">
+                                <img src="https://i.pinimg.com/1200x/d4/c2/76/d4c276dcc489e48a156d5ea6e9a3be68.jpg" alt="Caio Mattia" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Decorative frame -->
+                            <div class="absolute -bottom-4 -right-4 w-full h-full rounded-2xl border border-accent/20 -z-10"></div>
+                            <div class="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-accent/40 rounded-tl-xl"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Bio -->
+                    <div class="order-1 lg:order-2">
+                        <div class="reveal">
+                            <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Sobre Mim</p>
+                            <div class="section-divider mb-8"></div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 100ms;">
+                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif leading-tight mb-8">
+                                Criando experiências <br><span class="italic text-accent">que importam.</span>
+                            </h2>
+                        </div>
+                        <div class="reveal space-y-5 text-gray-400 leading-relaxed" style="transition-delay: 200ms;">
+                            <p>
+                                Sou um profissional apaixonado por tecnologia e design, com anos de experiência criando soluções digitais que combinam estética e funcionalidade. Acredito que cada projeto é uma oportunidade de contar uma história.
+                            </p>
+                            <p>
+                                Minha jornada começou com curiosidade e evoluiu para uma carreira dedicada a transformar ideias complexas em experiências intuitivas e memoráveis. Trabalho na interseção entre design e desenvolvimento.
+                            </p>
+                            <p>
+                                Quando não estou codando, você me encontra explorando novas tendências de design, contribuindo para projetos open-source ou compartilhando conhecimento com a comunidade.
+                            </p>
+                        </div>
+                        <div class="reveal mt-10" style="transition-delay: 300ms;">
+                            <!-- <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium btn-outline group">
+                                <iconify-icon icon="lucide:download" class="text-base group-hover:text-accent transition-colors"></iconify-icon>
+                                Baixar CV
+                            </a> -->
+                        </div>
+
+                        <!-- Timeline -->
+                        <div class="reveal mt-16" style="transition-delay: 400ms;">
+                            <h3 class="text-lg font-semibold mb-8 text-white/80">Trajetória</h3>
+                            <div class="relative pl-10 space-y-10">
+                                <div class="timeline-line"></div>
+
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <p class="text-xs text-accent font-medium uppercase tracking-wider mb-1">2025 — Presente</p>
+                                    <h4 class="text-white font-medium mb-1">Empreendedor Digital & Desenvolvedor Independente</h4>
+                                    <p class="text-sm text-gray-500">Desenvolvimento de produtos digitais, landing pages, automações, ferramentas e estratégias de marketing voltadas para vendas online.</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <p class="text-xs text-accent font-medium uppercase tracking-wider mb-1">2024 — Presente</p>
+                                    <h4 class="text-white font-medium mb-1">Desenvolvedor de Jogos</h4>
+                                    <p class="text-sm text-gray-500">Criação de jogos e protótipos utilizando Roblox Studio, Unity e GameMaker, com foco em programação, sistemas e experiência do jogador.</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <p class="text-xs text-accent font-medium uppercase tracking-wider mb-1">2022 — Presente</p>
+                                    <h4 class="text-white font-medium mb-1">Editor de Vídeo & Tradutor Freelancer</h4>
+                                    <p class="text-sm text-gray-500">Produção e edição de vídeos para diferentes nichos, além de tradução e adaptação de conteúdos digitais para diversos clientes.</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <p class="text-xs text-accent font-medium uppercase tracking-wider mb-1">2020</p>
+                                    <h4 class="text-white font-medium mb-1">Início da Jornada</h4>
+                                    <p class="text-sm text-gray-500">Primeiros projetos independentes nas áreas de edição de vídeo, programação e desenvolvimento, dando início Ã  construção da minha experiência profissional.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SERVICES / O Que Faço                        -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="services" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Especialidades</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            O que eu <span class="italic text-accent">faço.</span>
+                        </h2>
                     </div>
                 </div>
 
-                <!-- Username with Verified Badge -->
-                <div class="username-container">
-                    <h1 class="username" id="username">mattia</h1>
-                    <span class="badge verified-badge" title="Verified">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                fill="none" />
-                        </svg>
-                    </span>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <!-- Service 1 -->
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group cursor-default">
+                        <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                            <iconify-icon icon="lucide:monitor" class="text-accent text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Desenvolvimento Web</h3>
+                        <p class="text-gray-500 leading-relaxed text-sm">Sites e aplicações web modernas, rápidas e responsivas com as tecnologias mais atuais do mercado.</p>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group cursor-default" style="transition-delay: 100ms;">
+                        <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                            <iconify-icon icon="lucide:palette" class="text-accent text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">UI/UX Design</h3>
+                        <p class="text-gray-500 leading-relaxed text-sm">Interfaces intuitivas e experiências de usuário que encantam, com foco em usabilidade e estética.</p>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group cursor-default" style="transition-delay: 200ms;">
+                        <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                            <iconify-icon icon="lucide:smartphone" class="text-accent text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Mobile Development</h3>
+                        <p class="text-gray-500 leading-relaxed text-sm">Aplicativos mobile nativos e cross-platform com design fluido e performance otimizada.</p>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group cursor-default" style="transition-delay: 100ms;">
+                        <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                            <iconify-icon icon="lucide:figma" class="text-accent text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Branding</h3>
+                        <p class="text-gray-500 leading-relaxed text-sm">Identidade visual completa que comunica a essência da sua marca com clareza e impacto.</p>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group cursor-default" style="transition-delay: 200ms;">
+                        <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                            <iconify-icon icon="lucide:database" class="text-accent text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Backend & APIs</h3>
+                        <p class="text-gray-500 leading-relaxed text-sm">Arquiteturas robustas, APIs escaláveis e integrações inteligentes para sustentar qualquer aplicação.</p>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group cursor-default" style="transition-delay: 300ms;">
+                        <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                            <iconify-icon icon="lucide:rocket" class="text-accent text-2xl"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Consultoria</h3>
+                        <p class="text-gray-500 leading-relaxed text-sm">Orientação estratégica para transformar sua presença digital e alcançar resultados mensuráveis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!--
+        <!~~ ════════════════════════════════════════════ ~~>
+        <!~~ PROJECTS                                     ~~>
+        <!~~ ════════════════════════════════════════════ ~~>
+        <section id="projects" class="py-28 md:py-36 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Portfólio</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            Projetos <span class="italic text-accent">selecionados.</span>
+                        </h2>
+                    </div>
                 </div>
 
-                <!-- Bio -->
-                <p class="bio" id="bio">together in death</p>
-            </section>
-
-            <!-- Tab Navigation -->
-            <nav class="tab-navigation">
-                <button class="tab-button active" data-tab="profile">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
-                    </svg>
-                    <span>Profile</span>
-                </button>
-                <button class="tab-button" data-tab="portfolio">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                    </svg>
-                    <span>Portfolio</span>
-                </button>
-                <button class="tab-button" data-tab="about">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 16v-4M12 8h.01" />
-                    </svg>
-                    <span>About</span>
-                </button>
-                <div class="tab-indicator"></div>
-            </nav>
-
-            <!-- Tab Content -->
-            <div class="tab-content">
-
-                <!-- Profile Tab -->
-                <div class="tab-panel active" data-panel="profile">
-                    <!-- Credits Section -->
-                    <section class="credits">
-                        <div class="credit-item">
-                            <span class="credit-label">Founder of</span>
-                            <span class="credit-value">
-                                Mattia Xit
-                            </span>
-                        </div>
-                        <div class="credit-item">
-                            <span class="credit-label">Working with</span>
-                            <span class="credit-value">Software Dev and Game Hacking 🌐</span>
-                        </div>
-                    </section>
-
-                    <!-- Social Links -->
-                    <section class="social-links">
-                        <a href="https://github.com/caiomattia" class="social-icon" title="GitHub" target="_blank">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                            </svg>
-                        </a>
-                        <a href="https://instagram.com/mattiacaio" class="social-icon" title="Instagram"
-                            target="_blank">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
-                            </svg>
-                        </a>
-                        <span class="social-icon discord-badge" title="Discord" data-discord="caiomattia"
-                            id="discordBadge">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
-                            </svg>
-                        </span>
-                    </section>
-
-                    <!-- Music Player -->
-                    <section class="music-player hidden" id="musicPlayer">
-                        <div class="player-controls">
-                            <button class="player-button" id="playBtn">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="player-info">
-                            <div class="player-track">Lil peep - NUTS </div>
-                            <div class="player-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="progressFill"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    <!~~ Project 1 — Featured (blue accent) ~~>
+                    <div class="parallax-card-down">
+                        <div class="reveal card-glow bg-accent rounded-2xl p-8 md:p-10 aspect-[4/5] flex flex-col justify-between group cursor-pointer">
+                            <div class="flex justify-between items-start">
+                                <div class="w-11 h-11 rounded-full bg-black/10 flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
+                                    <iconify-icon icon="lucide:star" class="text-white text-xl"></iconify-icon>
                                 </div>
+                                <span class="text-white/70 font-medium text-xs border border-white/20 px-3 py-1 rounded-full">01</span>
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/15 px-2.5 py-1 rounded-full text-white/80">React</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/15 px-2.5 py-1 rounded-full text-white/80">Node.js</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/15 px-2.5 py-1 rounded-full text-white/80">MongoDB</span>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl text-white mb-3 leading-none tracking-tight font-serif">
+                                    Site<br>Pessoal
+                                </h3>
+                                <p class="text-white/70 text-sm leading-relaxed">
+                                    Uma experiência de compra completa com dashboard administrativo, pagamentos integrados e analytics em tempo real.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/15">
+                                <span class="text-xs text-white/50 uppercase tracking-wider">Ver projeto</span>
+                                <iconify-icon icon="lucide:arrow-up-right" class="text-white text-lg group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"></iconify-icon>
                             </div>
                         </div>
-                    </section>
+                    </div>
+
+                    <!~~ Project 2 ~~>
+                    <div class="parallax-card-up md:mt-20">
+                        <div class="reveal card-glow bg-surface rounded-2xl p-8 md:p-10 aspect-[4/5] flex flex-col justify-between group cursor-pointer" style="transition-delay: 150ms;">
+                            <div class="flex justify-between items-start">
+                                <div class="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                    <iconify-icon icon="lucide:layout" class="text-accent text-xl"></iconify-icon>
+                                </div>
+                                <span class="text-white/40 font-medium text-xs border border-white/10 px-3 py-1 rounded-full">02</span>
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">C++</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">Visual Studio</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">Reverse Eng</span>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl text-white mb-3 leading-none tracking-tight font-serif">
+                                    CS2 Internal<br> Cheat
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    Cheat de CS2 Interno
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/10">
+                                <span class="text-xs text-white/30 uppercase tracking-wider">Ver projeto</span>
+                                <iconify-icon icon="lucide:arrow-up-right" class="text-accent text-lg group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!~~ Project 3 ~~>
+                    <div class="parallax-card-down">
+                        <div class="reveal card-glow bg-surface rounded-2xl p-8 md:p-10 aspect-[4/5] flex flex-col justify-between group cursor-pointer">
+                            <div class="flex justify-between items-start">
+                                <div class="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+                                    <iconify-icon icon="lucide:smartphone" class="text-accent text-xl"></iconify-icon>
+                                </div>
+                                <span class="text-white/40 font-medium text-xs border border-white/10 px-3 py-1 rounded-full">03</span>
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">React Native</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">Firebase</span>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl text-white mb-3 leading-none tracking-tight font-serif">
+                                    App<br>Fitness
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    Aplicativo mobile para acompanhamento de treinos com gamificação, planos personalizados e integração com wearables.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/10">
+                                <span class="text-xs text-white/30 uppercase tracking-wider">Ver projeto</span>
+                                <iconify-icon icon="lucide:arrow-up-right" class="text-accent text-lg group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!~~ Project 4 ~~>
+                    <div class="parallax-card-up md:mt-20">
+                        <div class="reveal card-glow bg-surface rounded-2xl p-8 md:p-10 aspect-[4/5] flex flex-col justify-between group cursor-pointer" style="transition-delay: 150ms;">
+                            <div class="flex justify-between items-start">
+                                <div class="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                    <iconify-icon icon="lucide:globe" class="text-accent text-xl"></iconify-icon>
+                                </div>
+                                <span class="text-white/40 font-medium text-xs border border-white/10 px-3 py-1 rounded-full">04</span>
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">Vue.js</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">Python</span>
+                                    <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full text-white/50">AI/ML</span>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl text-white mb-3 leading-none tracking-tight font-serif">
+                                    Portal<br>Educacional
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    Plataforma de ensino online com IA para personalizar trilhas de aprendizagem e acompanhar progresso.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between mt-6 pt-6 border-t border-white/10">
+                                <span class="text-xs text-white/30 uppercase tracking-wider">Ver projeto</span>
+                                <iconify-icon icon="lucide:arrow-up-right" class="text-accent text-lg group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Portfolio Tab -->
-                <div class="tab-panel" data-panel="portfolio">
-                    <section class="portfolio-section">
-                        <h2 class="section-title">My Projects</h2>
-                        <div class="portfolio-grid">
-                            <div class="portfolio-item">
-                                <h3 class="portfolio-title">Mattia Xit</h3>
-                                <p class="portfolio-description">Advanced game enhancement tools</p>
-                                <div class="portfolio-tags">
-                                    <span class="tag">C++</span>
-                                    <span class="tag">Game Hacking</span>
-                                </div>
-                            </div>
-                            <div class="portfolio-item">
-                                <h3 class="portfolio-title">Web Development 🌐</h3>
-                                <p class="portfolio-description">Modern web applications</p>
-                                <div class="portfolio-tags">
-                                    <span class="tag">HTML/CSS</span>
-                                    <span class="tag">JavaScript</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- About Tab -->
-                <div class="tab-panel" data-panel="about">
-                    <section class="about-section">
-                        <h2 class="section-title">About Me</h2>
-                        <div class="about-content">
-                            <div class="about-item">
-                                <div class="about-text">
-                                    <h3>Developer 💻</h3>
-                                    <p>Passionate about software development and game hacking</p>
-                                </div>
-                            </div>
-                            <div class="about-item">
-                                <div class="about-text">
-                                    <h3>Skills 🎯</h3>
-                                    <p>C++, Python, JavaScript, Web Development, Reverse Engineering</p>
-                                </div>
-                            </div>
-                            <div class="about-item">
-                                <div class="about-text">
-                                    <h3>Focus 🚀</h3>
-                                    <p>Creating innovative tools and premium user experiences</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
             </div>
 
-        </div>
+            <!~~ Background dot pattern ~~>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-[0.06] pointer-events-none dot-pattern"></div>
+        </section>
+-->
 
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SKILLS                                       -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="skills" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Habilidades</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            Minhas <span class="italic text-accent">skills.</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+                    <!-- Left column -->
+                    <div class="space-y-8">
+                        <div class="reveal">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">C++</span>
+                                <span class="text-xs text-accent font-mono">95%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 80ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">C#</span>
+                                <span class="text-xs text-accent font-mono">90%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 160ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">Python</span>
+                                <span class="text-xs text-accent font-mono">88%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 240ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">Lua</span>
+                                <span class="text-xs text-accent font-mono">85%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 320ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">GML</span>
+                                <span class="text-xs text-accent font-mono">82%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="82%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right column -->
+                    <div class="space-y-8">
+                        <div class="reveal">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">TypeScript</span>
+                                <span class="text-xs text-accent font-mono">95%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 80ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">React / Next.js</span>
+                                <span class="text-xs text-accent font-mono">92%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="92%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 160ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">Node.js / Express</span>
+                                <span class="text-xs text-accent font-mono">88%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="reveal" style="transition-delay: 240ms;">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium text-white/90">UI/UX Design</span>
+                                <span class="text-xs text-accent font-mono">90%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="skill-fill h-full bg-gradient-to-r from-accent to-accent-light rounded-full" data-width="90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech logos -->
+                <div class="mt-24 flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-30 reveal">
+                    <span class="text-sm font-semibold tracking-widest">REACT</span>
+                    <span class="text-sm font-semibold tracking-widest">NODE</span>
+                    <span class="text-sm font-semibold tracking-widest">FIGMA</span>
+                    <span class="text-sm font-semibold tracking-widest">PYTHON</span>
+                    <span class="text-sm font-semibold tracking-widest">AWS</span>
+                    <span class="text-sm font-semibold tracking-widest">DOCKER</span>
+                </div>
+            </div>
+        </section>
+
+<!--
+        <!~~ ════════════════════════════════════════════ ~~>
+        <!~~ ACHIEVEMENTS                                 ~~>
+        <!~~ ════════════════════════════════════════════ ~~>
+        <section id="achievements" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Reconhecimentos</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            Conquistas & <span class="italic text-accent">Premiações.</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <iconify-icon icon="lucide:trophy" class="text-accent text-xl"></iconify-icon>
+                        </div>
+                        <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">2024</p>
+                        <h3 class="text-lg font-semibold mb-2">Melhor Projeto Digital</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Premiação regional de inovação em tecnologia e design de interfaces.</p>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group" style="transition-delay: 100ms;">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <iconify-icon icon="lucide:award" class="text-accent text-xl"></iconify-icon>
+                        </div>
+                        <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">2023</p>
+                        <h3 class="text-lg font-semibold mb-2">Certificação AWS</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">AWS Certified Solutions Architect — validação de expertise em cloud computing.</p>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group" style="transition-delay: 200ms;">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <iconify-icon icon="lucide:medal" class="text-accent text-xl"></iconify-icon>
+                        </div>
+                        <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">2023</p>
+                        <h3 class="text-lg font-semibold mb-2">Hackathon Winner</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">1Âº lugar em hackathon nacional com solução de IA para acessibilidade digital.</p>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group" style="transition-delay: 100ms;">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <iconify-icon icon="lucide:bookmark" class="text-accent text-xl"></iconify-icon>
+                        </div>
+                        <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">2022</p>
+                        <h3 class="text-lg font-semibold mb-2">Google UX Certificate</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Certificação profissional em UX Design pelo Google Career Certificates.</p>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group" style="transition-delay: 200ms;">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <iconify-icon icon="lucide:star" class="text-accent text-xl"></iconify-icon>
+                        </div>
+                        <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">2021</p>
+                        <h3 class="text-lg font-semibold mb-2">Open Source Contributor</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Top contributor em projeto open-source com mais de 5k stars no GitHub.</p>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl p-8 group" style="transition-delay: 300ms;">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <iconify-icon icon="lucide:graduation-cap" class="text-accent text-xl"></iconify-icon>
+                        </div>
+                        <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">2020</p>
+                        <h3 class="text-lg font-semibold mb-2">Graduação em CS</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Bacharelado em Ciência da Computação com honras acadêmicas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+-->
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- STATISTICS                                   -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="stats" class="py-28 md:py-36 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                    <div class="reveal text-center">
+                        <span class="counter-value text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif" data-target="5">0</span>
+                        <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif">+</span>
+                        <p class="text-sm text-gray-500 mt-3 uppercase tracking-wider">Anos de<br>Experiência</p>
+                    </div>
+                    <div class="reveal text-center" style="transition-delay: 100ms;">
+                        <span class="counter-value text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif" data-target="50">0</span>
+                        <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif">+</span>
+                        <p class="text-sm text-gray-500 mt-3 uppercase tracking-wider">Projetos<br>Concluídos</p>
+                    </div>
+                    <div class="reveal text-center" style="transition-delay: 200ms;">
+                        <span class="counter-value text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif" data-target="30">0</span>
+                        <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif">+</span>
+                        <p class="text-sm text-gray-500 mt-3 uppercase tracking-wider">Clientes<br>Satisfeitos</p>
+                    </div>
+                    <div class="reveal text-center" style="transition-delay: 300ms;">
+                        <span class="counter-value text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif" data-target="10">0</span>
+                        <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-accent font-serif">K+</span>
+                        <p class="text-sm text-gray-500 mt-3 uppercase tracking-wider">Horas<br>Dedicadas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decorative lines -->
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+        </section>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- TESTIMONIALS                                 -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="testimonials" class="py-28 md:py-36 relative overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Depoimentos</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            O que <span class="italic text-accent">dizem.</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="max-w-3xl mx-auto reveal" style="transition-delay: 200ms;">
+                    <div class="overflow-hidden rounded-2xl">
+                        <div id="testimonial-track" class="testimonial-track">
+                            <!-- Slide 1 -->
+                            <div class="testimonial-slide">
+                                <div class="bg-surface border border-white/5 rounded-2xl p-8 md:p-12 text-center">
+                                    <iconify-icon icon="lucide:quote" class="text-accent text-3xl mb-6 opacity-40"></iconify-icon>
+                                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 font-light italic font-serif">
+                                        "Trabalhar com ele foi uma experiência transformadora. Entregou muito além do esperado, com atenção impecável aos detalhes e uma visão criativa que elevou completamente nosso projeto."
+                                    </p>
+                                    <div>
+                                        <p class="text-white font-medium">Minha Mãe</p>
+                                        <p class="text-sm text-gray-500">Mãe & Fã Nº1</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 2 -->
+                            <div class="testimonial-slide">
+                                <div class="bg-surface border border-white/5 rounded-2xl p-8 md:p-12 text-center">
+                                    <iconify-icon icon="lucide:quote" class="text-accent text-3xl mb-6 opacity-40"></iconify-icon>
+                                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 font-light italic font-serif">
+                                        "Profissionalismo e qualidade excepcionais. O resultado final superou todas as nossas expectativas. Recomendo de olhos fechados para qualquer projeto digital."
+                                    </p>
+                                    <div>
+                                        <p class="text-white font-medium">Meu Pai</p>
+                                        <p class="text-sm text-gray-500">Pai & Investidor Anjo</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 3 -->
+                            <div class="testimonial-slide">
+                                <div class="bg-surface border border-white/5 rounded-2xl p-8 md:p-12 text-center">
+                                    <iconify-icon icon="lucide:quote" class="text-accent text-3xl mb-6 opacity-40"></iconify-icon>
+                                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 font-light italic font-serif">
+                                        "Comunicação clara, entregas no prazo e um senso estético que poucos profissionais têm. Nosso app ficou incrível e os usuários amaram."
+                                    </p>
+                                    <div>
+                                        <p class="text-white font-medium">Meu Gato</p>
+                                        <p class="text-sm text-gray-500">Chief Napping Officer</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel controls -->
+                    <div class="flex items-center justify-center gap-6 mt-8">
+                        <button id="test-prev" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-accent hover:text-accent transition-all duration-300" aria-label="Anterior">
+                            <iconify-icon icon="lucide:chevron-left" class="text-lg"></iconify-icon>
+                        </button>
+                        <div id="test-dots" class="flex gap-2">
+                            <button class="test-dot w-2 h-2 rounded-full bg-accent transition-all duration-300" data-index="0"></button>
+                            <button class="test-dot w-2 h-2 rounded-full bg-white/20 transition-all duration-300" data-index="1"></button>
+                            <button class="test-dot w-2 h-2 rounded-full bg-white/20 transition-all duration-300" data-index="2"></button>
+                        </div>
+                        <button id="test-next" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-accent hover:text-accent transition-all duration-300" aria-label="Próximo">
+                            <iconify-icon icon="lucide:chevron-right" class="text-lg"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- GALLERY                                      -->
+        <!-- ════════════════════════════════════════════ -->
+        <section id="gallery" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Momentos</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            Galeria <span class="italic text-accent">pessoal.</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+                    <div class="reveal gallery-item aspect-square relative cursor-pointer">
+                        <div class="w-full h-full bg-gradient-to-br from-surface to-accent/5"></div>
+                        <div class="gallery-overlay absolute inset-0 bg-accent/20 backdrop-blur-sm flex items-center justify-center">
+                            <iconify-icon icon="lucide:expand" class="text-white text-2xl"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="reveal gallery-item aspect-square relative cursor-pointer" style="transition-delay: 80ms;">
+                        <div class="w-full h-full bg-gradient-to-br from-accent/10 to-surface"></div>
+                        <div class="gallery-overlay absolute inset-0 bg-accent/20 backdrop-blur-sm flex items-center justify-center">
+                            <iconify-icon icon="lucide:expand" class="text-white text-2xl"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="reveal gallery-item aspect-square relative cursor-pointer" style="transition-delay: 160ms;">
+                        <div class="w-full h-full bg-gradient-to-br from-surface to-white/5"></div>
+                        <div class="gallery-overlay absolute inset-0 bg-accent/20 backdrop-blur-sm flex items-center justify-center">
+                            <iconify-icon icon="lucide:expand" class="text-white text-2xl"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="reveal gallery-item md:col-span-2 aspect-[2/1] relative cursor-pointer" style="transition-delay: 80ms;">
+                        <div class="w-full h-full bg-gradient-to-r from-accent/8 via-surface to-accent/5"></div>
+                        <div class="gallery-overlay absolute inset-0 bg-accent/20 backdrop-blur-sm flex items-center justify-center">
+                            <iconify-icon icon="lucide:expand" class="text-white text-2xl"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="reveal gallery-item aspect-square relative cursor-pointer" style="transition-delay: 160ms;">
+                        <div class="w-full h-full bg-gradient-to-br from-white/5 to-surface"></div>
+                        <div class="gallery-overlay absolute inset-0 bg-accent/20 backdrop-blur-sm flex items-center justify-center">
+                            <iconify-icon icon="lucide:expand" class="text-white text-2xl"></iconify-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!--
+        <!~~ ════════════════════════════════════════════ ~~>
+        <!~~ BLOG                                         ~~>
+        <!~~ ════════════════════════════════════════════ ~~>
+        <section id="blog" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Artigos</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            Blog & <span class="italic text-accent">Insights.</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <div class="reveal card-glow bg-surface rounded-2xl overflow-hidden group cursor-pointer">
+                        <div class="aspect-video bg-gradient-to-br from-accent/15 to-surface relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <iconify-icon icon="lucide:file-text" class="text-white/10 text-5xl"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-accent uppercase tracking-wider mb-3">Design â€¢ Jan 2025</p>
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-accent transition-colors duration-300">Design Systems: Por Que Seu Projeto Precisa de Um</h3>
+                            <p class="text-sm text-gray-500 leading-relaxed mb-4">Como um design system bem estruturado pode acelerar o desenvolvimento e manter a consistência visual.</p>
+                            <span class="text-xs text-accent uppercase tracking-wider inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+                                Ler mais <iconify-icon icon="lucide:arrow-right" class="text-sm"></iconify-icon>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl overflow-hidden group cursor-pointer" style="transition-delay: 100ms;">
+                        <div class="aspect-video bg-gradient-to-br from-surface to-accent/10 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <iconify-icon icon="lucide:code-2" class="text-white/10 text-5xl"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-accent uppercase tracking-wider mb-3">Dev â€¢ Dez 2024</p>
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-accent transition-colors duration-300">Performance Web: Otimizações Que Fazem Diferença</h3>
+                            <p class="text-sm text-gray-500 leading-relaxed mb-4">Técnicas práticas para melhorar Core Web Vitals e entregar uma experiência rápida aos usuários.</p>
+                            <span class="text-xs text-accent uppercase tracking-wider inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+                                Ler mais <iconify-icon icon="lucide:arrow-right" class="text-sm"></iconify-icon>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="reveal card-glow bg-surface rounded-2xl overflow-hidden group cursor-pointer" style="transition-delay: 200ms;">
+                        <div class="aspect-video bg-gradient-to-br from-accent/8 to-surface relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <iconify-icon icon="lucide:brain" class="text-white/10 text-5xl"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-accent uppercase tracking-wider mb-3">IA â€¢ Nov 2024</p>
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-accent transition-colors duration-300">IA no Design: Ferramenta ou Ameaça?</h3>
+                            <p class="text-sm text-gray-500 leading-relaxed mb-4">Uma reflexão sobre como inteligência artificial está mudando a forma como projetamos experiências digitais.</p>
+                            <span class="text-xs text-accent uppercase tracking-wider inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+                                Ler mais <iconify-icon icon="lucide:arrow-right" class="text-sm"></iconify-icon>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+-->
+
+<!--
+        <!~~ ════════════════════════════════════════════ ~~>
+        <!~~ CONTACT                                      ~~>
+        <!~~ ════════════════════════════════════════════ ~~>
+        <section id="contact" class="py-28 md:py-36 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <div class="reveal">
+                        <p class="text-accent text-sm uppercase tracking-[0.25em] mb-4 font-medium">Contato</p>
+                        <div class="section-divider mx-auto mb-8"></div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 100ms;">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif">
+                            Vamos <span class="italic text-accent">conversar?</span>
+                        </h2>
+                    </div>
+                    <div class="reveal" style="transition-delay: 200ms;">
+                        <p class="text-gray-500 max-w-lg mx-auto mt-6 leading-relaxed">
+                            Tem um projeto em mente? Quer trocar uma ideia? Estou sempre aberto a novas oportunidades e conversas interessantes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
+                    <!~~ Form ~~>
+                    <div class="lg:col-span-3 reveal">
+                        <form id="contact-form" class="space-y-5" onsubmit="event.preventDefault();">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <input type="text" placeholder="Seu nome" class="form-input" required>
+                                <input type="email" placeholder="Seu e-mail" class="form-input" required>
+                            </div>
+                            <input type="text" placeholder="Assunto" class="form-input">
+                            <textarea placeholder="Sua mensagem..." class="form-input min-h-[160px] resize-none" required></textarea>
+                            <button type="submit" class="w-full sm:w-auto px-10 py-3.5 rounded-full text-sm font-medium btn-accent inline-flex items-center justify-center gap-2">
+                                <span>Enviar Mensagem</span>
+                                <iconify-icon icon="lucide:send" class="text-base"></iconify-icon>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!~~ Contact info ~~>
+                    <div class="lg:col-span-2 reveal" style="transition-delay: 150ms;">
+                        <div class="space-y-8">
+                            <div>
+                                <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">E-mail</p>
+                                <a href="mailto:contato@caiomattia.com" class="text-gray-300 hover:text-accent transition-colors">contato@caiomattia.com</a>
+                            </div>
+                            <div>
+                                <p class="text-xs text-accent uppercase tracking-wider mb-2 font-medium">Localização</p>
+                                <p class="text-gray-300">Brasil</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-accent uppercase tracking-wider mb-3 font-medium">Redes Sociais</p>
+                                <div class="flex gap-3">
+                                    <a href="#" class="w-10 h-10 rounded-xl bg-surface border border-white/5 flex items-center justify-center hover:border-accent hover:text-accent transition-all duration-300" aria-label="GitHub">
+                                        <iconify-icon icon="lucide:github" class="text-lg"></iconify-icon>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-xl bg-surface border border-white/5 flex items-center justify-center hover:border-accent hover:text-accent transition-all duration-300" aria-label="LinkedIn">
+                                        <iconify-icon icon="lucide:linkedin" class="text-lg"></iconify-icon>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-xl bg-surface border border-white/5 flex items-center justify-center hover:border-accent hover:text-accent transition-all duration-300" aria-label="Instagram">
+                                        <iconify-icon icon="lucide:instagram" class="text-lg"></iconify-icon>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-xl bg-surface border border-white/5 flex items-center justify-center hover:border-accent hover:text-accent transition-all duration-300" aria-label="Twitter">
+                                        <iconify-icon icon="lucide:twitter" class="text-lg"></iconify-icon>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!~~ Mini availability status ~~>
+                        <div class="mt-12 p-5 rounded-xl bg-surface border border-white/5">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
+                                <p class="text-sm font-medium text-white/90">Disponível para projetos</p>
+                            </div>
+                            <p class="text-xs text-gray-500">Tempo de resposta: ~24 horas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+-->
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- FOOTER                                       -->
+        <!-- ════════════════════════════════════════════ -->
+        <footer class="py-16 border-t border-white/5 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+                    <div class="w-full md:w-auto">
+                        <h2 class="text-[12vw] md:text-[8vw] leading-[0.8] tracking-tighter text-white/[0.04] font-bold select-none pointer-events-none font-serif">
+                            MATTIA.
+                        </h2>
+                    </div>
+                    <div class="flex flex-col gap-6 text-left md:text-right">
+                        <div class="flex flex-col gap-3 text-gray-500 text-sm">
+                            <a href="#" class="hover:text-accent transition-colors duration-300">GitHub</a>
+                            <a href="#" class="hover:text-accent transition-colors duration-300">LinkedIn</a>
+                            <a href="#" class="hover:text-accent transition-colors duration-300">Instagram</a>
+                        </div>
+                        <p class="text-xs text-gray-700">Â© 2025 Caio Mattia. Todos os direitos reservados.</p>
+                    </div>
+                </div>
+
+                <!-- Back to top -->
+                <div class="mt-10 text-center">
+                    <a href="#hero" class="inline-flex items-center gap-2 text-xs text-gray-600 hover:text-accent transition-colors duration-300 uppercase tracking-widest">
+                        <iconify-icon icon="lucide:arrow-up" class="text-sm"></iconify-icon>
+                        Voltar ao topo
+                    </a>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <!-- JavaScript -->
-    <script defer src="script.js"></script>
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- JAVASCRIPT                                      -->
+    <!-- ══════════════════════════════════════════════ -->
+    <script>
+    (function() {
+        'use strict';
 
+        // â”€â”€ 1. Reveal on scroll â”€â”€
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // â”€â”€ 2. Navbar scroll effect â”€â”€
+        const nav = document.getElementById('main-nav');
+        let lastScroll = 0;
+
+        function handleNavScroll() {
+            const scrollY = window.scrollY;
+            if (scrollY > 60) {
+                nav.style.padding = '0.75rem 0';
+                nav.style.backgroundColor = 'rgba(5,5,5,0.85)';
+                nav.style.backdropFilter = 'blur(12px)';
+                nav.style.borderBottom = '1px solid rgba(255,255,255,0.04)';
+            } else {
+                nav.style.padding = '1.5rem 0';
+                nav.style.backgroundColor = 'transparent';
+                nav.style.backdropFilter = 'none';
+                nav.style.borderBottom = 'none';
+            }
+            lastScroll = scrollY;
+        }
+        window.addEventListener('scroll', handleNavScroll, { passive: true });
+
+        // â”€â”€ 3. Mobile menu toggle â”€â”€
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const bar1 = document.getElementById('bar1');
+        const bar2 = document.getElementById('bar2');
+        const bar3 = document.getElementById('bar3');
+        let menuOpen = false;
+
+        mobileToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open', menuOpen);
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+
+            if (menuOpen) {
+                bar1.style.transform = 'rotate(45deg) translateY(6px)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'rotate(-45deg) translateY(-6px)';
+                bar3.style.width = '1.5rem';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '1';
+                bar3.style.transform = '';
+                bar3.style.width = '1rem';
+            }
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+                bar1.style.transform = '';
+                bar2.style.opacity = '1';
+                bar3.style.transform = '';
+                bar3.style.width = '1rem';
+            });
+        });
+
+        // â”€â”€ 4. Parallax â”€â”€
+        function handleParallax() {
+            const scrolled = window.scrollY;
+            document.querySelectorAll('.parallax-card-up').forEach(el => {
+                el.style.setProperty('--scroll-offset-up', `${scrolled * -0.04}px`);
+            });
+            document.querySelectorAll('.parallax-card-down').forEach(el => {
+                el.style.setProperty('--scroll-offset-down', `${scrolled * 0.04}px`);
+            });
+        }
+        window.addEventListener('scroll', handleParallax, { passive: true });
+
+        // â”€â”€ 5. Hero parallax â”€â”€
+        const heroWrapper = document.getElementById('hero-content-wrapper');
+        function handleHeroParallax() {
+            const scrolled = window.scrollY;
+            if (scrolled < 800) {
+                heroWrapper.style.transform = `translateY(${scrolled * 0.35}px)`;
+                heroWrapper.style.opacity = Math.max(0, 1 - scrolled / 500);
+            }
+        }
+        window.addEventListener('scroll', handleHeroParallax, { passive: true });
+
+        // â”€â”€ 6. Clock â”€â”€
+        function updateTime() {
+            const el = document.getElementById('current-time');
+            if (!el) return;
+            const now = new Date();
+            let h = now.getHours();
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            el.textContent = `${h}:${m} ${ampm}`;
+        }
+        updateTime();
+        setInterval(updateTime, 30000);
+
+        // â”€â”€ 7. Skill bars animation â”€â”€
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const target = bar.dataset.width;
+                    bar.classList.add('animated');
+                    bar.style.width = target;
+                    skillObserver.unobserve(bar);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.skill-fill').forEach(bar => skillObserver.observe(bar));
+
+        // â”€â”€ 8. Counter animation â”€â”€
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target, 10);
+                    animateCounter(el, target);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        function animateCounter(el, target) {
+            const duration = 1800;
+            const start = performance.now();
+            function update(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const ease = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(target * ease);
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        }
+
+        document.querySelectorAll('.counter-value').forEach(el => counterObserver.observe(el));
+
+        // â”€â”€ 9. Testimonial carousel â”€â”€
+        const track = document.getElementById('testimonial-track');
+        const dots = document.querySelectorAll('.test-dot');
+        const prevBtn = document.getElementById('test-prev');
+        const nextBtn = document.getElementById('test-next');
+        let currentSlide = 0;
+        const totalSlides = 3;
+        let autoplayInterval;
+
+        function goToSlide(index) {
+            currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((d, i) => {
+                d.classList.toggle('bg-accent', i === currentSlide);
+                d.classList.toggle('bg-white/20', i !== currentSlide);
+                d.style.width = i === currentSlide ? '1.5rem' : '0.5rem';
+            });
+        }
+
+        function startAutoplay() {
+            autoplayInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
+        }
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            startAutoplay();
+        }
+
+        prevBtn.addEventListener('click', () => { goToSlide(currentSlide - 1); resetAutoplay(); });
+        nextBtn.addEventListener('click', () => { goToSlide(currentSlide + 1); resetAutoplay(); });
+        dots.forEach(d => d.addEventListener('click', () => { goToSlide(parseInt(d.dataset.index)); resetAutoplay(); }));
+
+        startAutoplay();
+
+        // â”€â”€ 10. Active nav link â”€â”€
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            const scrollY = window.scrollY + 200;
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                if (scrollY >= top && scrollY < top + height) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('text-white', link.getAttribute('href') === '#' + id);
+                        link.classList.toggle('text-gray-400', link.getAttribute('href') !== '#' + id);
+                    });
+                }
+            });
+        }
+        window.addEventListener('scroll', highlightNav, { passive: true });
+
+    })();
+    </script>
 </body>
-
 </html>
+
+
+
